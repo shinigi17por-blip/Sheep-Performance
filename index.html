@@ -60,6 +60,7 @@
     --radius-md:14px;
     --radius-lg:20px;
     --font: -apple-system, "Segoe UI", "Sarabun", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --sticky-offset:0px;
   }
 
   *{box-sizing:border-box;}
@@ -79,6 +80,11 @@
   button{font-family:inherit;}
 
   .wrap{max-width:1320px;margin:0 auto;padding:20px 20px 64px;}
+
+  .sticky-head{
+    padding-top:20px;margin-top:-20px;
+    padding-bottom:2px;
+  }
 
   /* ---------------- Header ---------------- */
   .app-header{
@@ -274,27 +280,30 @@
   #staffKpiGrid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));}
   .kpi-card{
     background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
-    padding:16px 18px;box-shadow:var(--shadow);position:relative;overflow:hidden;
+    padding:11px 15px;box-shadow:var(--shadow);position:relative;overflow:hidden;
   }
   .kpi-card.accent::before{
     content:"";position:absolute;top:0;left:0;right:0;height:4px;
     background:linear-gradient(90deg,var(--accent),#ffb374);
   }
-  .kpi-card-merged{display:flex;flex-direction:column;gap:14px;}
+  .kpi-card-merged{display:flex;flex-direction:column;gap:8px;}
   .kpi-divider{height:1px;background:var(--border);margin:0 -2px;}
-  .kpi-label{font-size:12px;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.04em;}
-  .kpi-value{font-size:26px;font-weight:800;color:var(--text-primary);margin-top:6px;line-height:1.15;font-variant-numeric:proportional-nums;}
-  .kpi-value-full{font-size:12.5px;font-weight:700;color:var(--text-muted);margin-top:2px;font-variant-numeric:tabular-nums;}
-  .kpi-sub{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:12.5px;color:var(--text-secondary);}
+  .kpi-label{font-size:10.5px;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.04em;}
+  .kpi-value{font-size:19px;font-weight:800;color:var(--text-primary);margin-top:3px;line-height:1.15;font-variant-numeric:proportional-nums;}
+  .kpi-value-full{font-size:11px;font-weight:700;color:var(--text-muted);margin-top:1px;font-variant-numeric:tabular-nums;}
+  .kpi-sub{display:flex;align-items:center;gap:5px;margin-top:5px;font-size:11px;color:var(--text-secondary);}
   .kpi-delta{font-weight:700;display:inline-flex;align-items:center;gap:3px;}
   .kpi-delta.up{color:var(--status-good);}
   .kpi-delta.down{color:var(--status-critical);}
   .meter{height:8px;border-radius:6px;background:var(--surface-tint);margin-top:10px;overflow:hidden;}
+  .kpi-card .meter{height:6px;margin-top:6px;}
   .meter-fill{height:100%;border-radius:6px;transition:width .4s ease;}
   .status-chip{
     display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;
     padding:3px 9px;border-radius:999px;
   }
+  .kpi-card .status-chip{padding:2px 7px;font-size:10.5px;}
+  .kpi-card .status-dot{width:6px;height:6px;}
   .status-chip.good{color:var(--status-good);background:var(--status-good-bg);}
   .status-chip.warning{color:var(--status-warning);background:var(--status-warning-bg);}
   .status-chip.critical{color:var(--status-critical);background:var(--status-critical-bg);}
@@ -481,6 +490,7 @@
 <body>
 <div class="wrap">
 
+  <div class="sticky-head" id="stickyHead">
   <header class="app-header">
     <div class="brand">
       <div class="brand-mark">Sheep</div>
@@ -514,6 +524,8 @@
     <button type="button" data-view="shop" class="active">📊 ภาพรวม Shop</button>
     <button type="button" data-view="staff">🧑‍💼 Staff</button>
   </div>
+  </div>
+  <!-- /.sticky-head -->
 
   <section class="filter-bar">
     <div class="filter-field">
@@ -561,7 +573,7 @@
 
   <div id="shopView">
 
-  <section class="kpi-grid" id="kpiGrid"><div class="kpi-card accent"><div class="kpi-label">Net Amount</div><div class="kpi-value">1.83M</div><div class="kpi-value-full">1,826,920</div><div class="kpi-sub">Target 3,049,306&nbsp;·&nbsp;<span class="status-chip critical"><span class="status-dot"></span>ต่ำกว่าเป้า 59.9%</span></div><div class="meter"><div class="meter-fill" style="width:59.91264469530552%;background:var(--status-critical);"></div></div></div><div class="kpi-card"><div class="kpi-label">Run-Rate (Net Amount)</div><div class="kpi-value">3.15M</div><div class="kpi-value-full">3,146,362</div><div class="kpi-sub"><span class="status-chip good"><span class="status-dot"></span>RR 103.2%</span></div><div class="meter"><div class="meter-fill" style="width:100%;background:var(--status-good);"></div></div></div><div class="kpi-card"><div class="kpi-label">MOM (RR vs Jul) — Net Amount</div><div class="kpi-value kpi-delta up" style="font-size:22px;">▲ +25.3%</div><div class="kpi-sub">RR 3,146,362 vs Jul 2,511,633</div></div><div class="kpi-card"><div class="kpi-label">QTY (Unit)</div><div class="kpi-value">2,906 <span style="font-size:13px;color:var(--text-muted);font-weight:600;">Units</span></div><div class="kpi-sub">Target 4,047&nbsp;·&nbsp;<span class="status-chip critical"><span class="status-dot"></span>ต่ำกว่าเป้า 71.8%</span></div><div class="meter"><div class="meter-fill" style="width:71.80627625401532%;background:var(--status-critical);"></div></div></div><div class="kpi-card"><div class="kpi-label">Run-Rate (QTY)</div><div class="kpi-value">5,005 <span style="font-size:13px;color:var(--text-muted);font-weight:600;">Units</span></div><div class="kpi-sub"><span class="status-chip good"><span class="status-dot"></span>RR 123.7%</span></div><div class="meter"><div class="meter-fill" style="width:100%;background:var(--status-good);"></div></div></div><div class="kpi-card"><div class="kpi-label">MOM (RR vs Jul) — QTY</div><div class="kpi-value kpi-delta up" style="font-size:22px;">▲ +24.7%</div><div class="kpi-sub">RR 5,005 vs Jul 4,014</div></div></section>
+  <section class="kpi-grid" id="kpiGrid"><div class="kpi-card accent"><div class="kpi-label">Net Amount</div><div class="kpi-value">1.83M</div><div class="kpi-value-full">1,826,920</div><div class="kpi-sub">Target 3,049,306&nbsp;·&nbsp;<span class="status-chip critical"><span class="status-dot"></span>ต่ำกว่าเป้า 59.9%</span></div><div class="meter"><div class="meter-fill" style="width:59.91264469530552%;background:var(--status-critical);"></div></div></div><div class="kpi-card"><div class="kpi-label">Run-Rate (Net Amount)</div><div class="kpi-value">3.15M</div><div class="kpi-value-full">3,146,362</div><div class="kpi-sub"><span class="status-chip good"><span class="status-dot"></span>RR 103.2%</span></div><div class="meter"><div class="meter-fill" style="width:100%;background:var(--status-good);"></div></div></div><div class="kpi-card"><div class="kpi-label">MOM (RR vs Jul) — Net Amount</div><div class="kpi-value kpi-delta up" style="font-size:17px;">▲ +25.3%</div><div class="kpi-sub">RR 3,146,362 vs Jul 2,511,633</div></div><div class="kpi-card"><div class="kpi-label">QTY (Unit)</div><div class="kpi-value">2,906 <span style="font-size:11px;color:var(--text-muted);font-weight:600;">Units</span></div><div class="kpi-sub">Target 4,047&nbsp;·&nbsp;<span class="status-chip critical"><span class="status-dot"></span>ต่ำกว่าเป้า 71.8%</span></div><div class="meter"><div class="meter-fill" style="width:71.80627625401532%;background:var(--status-critical);"></div></div></div><div class="kpi-card"><div class="kpi-label">Run-Rate (QTY)</div><div class="kpi-value">5,005 <span style="font-size:11px;color:var(--text-muted);font-weight:600;">Units</span></div><div class="kpi-sub"><span class="status-chip good"><span class="status-dot"></span>RR 123.7%</span></div><div class="meter"><div class="meter-fill" style="width:100%;background:var(--status-good);"></div></div></div><div class="kpi-card"><div class="kpi-label">MOM (RR vs Jul) — QTY</div><div class="kpi-value kpi-delta up" style="font-size:17px;">▲ +24.7%</div><div class="kpi-sub">RR 5,005 vs Jul 4,014</div></div></section>
 
   <section class="grid-top">
     <div class="panel">
@@ -666,16 +678,6 @@
     <div class="exec-list" id="execList"><div class="exec-item critical"><span class="ico">✕</span><p><b>ภาพรวมทั้งหมด</b> ทำยอดขายได้เพียง 59.9% ของเป้าหมาย (1.83M จาก 3.05M) ยังขาดอีก <b>1.22M</b> ควรเร่งมาตรการกระตุ้นยอดขาย</p></div><div class="exec-item good"><span class="ico">✓</span><p>แนวโน้มยอดขายเต็มเดือน (Run-Rate) คาดว่าจะปิดที่ <b>3.15M</b> ซึ่ง<b>สูงกว่าเป้าหมาย</b> (103.2% ของเป้า) หากรักษาอัตราการขายปัจจุบันไว้ได้</p></div><div class="exec-item good"><span class="ico">✓</span><p>เทียบแนวโน้มยอดขายเต็มเดือน (Run-Rate) กับเดือนก่อนหน้า (ก.ค.) คาดว่าจะเติบโตขึ้น <b>+25.3%</b> (ก.ค. 2.51M → RR ส.ค. 3.15M)</p></div><div class="exec-item info"><span class="ico">ℹ</span><p>ผลงานดีที่สุดคือ <b>BMA</b> บรรลุเป้า 62.7% ขณะที่ <b>UPC I</b> ทำได้เพียง 54.6% ของเป้าหมาย ซึ่งเป็นจุดที่ควรให้ความสำคัญเพิ่มเติม</p></div><div class="exec-item info"><span class="ico">ℹ</span><p>หมวดหมู่สินค้าขายดีที่สุดคือ <b>Sheep Clear</b> ทำยอดขาย 374.6K หรือคิดเป็น <b>20.5%</b> ของยอดขายทั้งหมดในขอบเขตนี้ และสินค้าขายดีอันดับ 1 คือ "Cloth Bag - ถุงผ้าส้ม (1:50)"</p></div></div>
   </section>
 
-  <section class="panel">
-    <div class="panel-header">
-      <div>
-        <div class="panel-title"><span class="ico">🕓</span> ประวัติการใช้งาน / อัปเดตข้อมูล</div>
-        <div class="panel-desc" id="uploadLogDesc">บันทึกทุกครั้งที่มีการ Upload ไฟล์ .xlsx ใหม่ลงแดชบอร์ดนี้ — ประวัตินี้จะถูกฝังไว้ในไฟล์เมื่อกดปุ่ม "บันทึกไฟล์เวอร์ชันนี้" (นับเฉพาะการอัปเดตข้อมูลบนเบราว์เซอร์นี้)</div>
-      </div>
-    </div>
-    <div class="upload-log-list" id="uploadLogList"><div class="upload-log-item"><div class="ulog-ico">⭱</div><div class="ulog-main"><div class="ulog-title">sheep.xlsx</div><div class="ulog-sub">2,843 รายการขาย · 1,055 พนักงาน · Data  1 - 18 Aug 2026</div></div><div class="ulog-time">19 สิงหาคม 2569 13:57</div></div></div>
-  </section>
-
   </div>
   <!-- /#shopView -->
 
@@ -702,7 +704,7 @@
 
   <div class="breadcrumb-scope" id="staffScopeBreadcrumb" style="margin:-8px 0 16px 4px;">ขอบเขตข้อมูลปัจจุบัน: <b>Regional: ทั้งหมด</b> &nbsp;·&nbsp; <b>Area: ทั้งหมด</b> &nbsp;·&nbsp; <b>Shop: ทั้งหมด</b> &nbsp;·&nbsp; <b>Shop Type: ทั้งหมด</b> &nbsp;·&nbsp; <b>Emp Type: ทั้งหมด</b></div>
 
-  <section class="kpi-grid" id="staffKpiGrid"><div class="kpi-card accent"><div class="kpi-label">Net Amount (Staff)</div><div class="kpi-value">1.24M</div><div class="kpi-value-full">1,238,414</div><div class="kpi-sub">Target 2,664,306&nbsp;·&nbsp;<span class="status-chip critical"><span class="status-dot"></span>ต่ำกว่าเป้า 46.5%</span></div><div class="meter"><div class="meter-fill" style="width:46.481674494297856%;background:var(--status-critical);"></div></div></div><div class="kpi-card"><div class="kpi-label">QTY (Unit)</div><div class="kpi-value">1,836 <span style="font-size:13px;color:var(--text-muted);font-weight:600;">Units</span></div><div class="kpi-sub">Target 3,471&nbsp;·&nbsp;<span class="status-chip critical"><span class="status-dot"></span>52.9%</span></div><div class="meter"><div class="meter-fill" style="width:52.89542375932802%;background:var(--status-critical);"></div></div></div><div class="kpi-card"><div class="kpi-label">จำนวนพนักงาน</div><div class="kpi-value">1,055 <span style="font-size:13px;color:var(--text-muted);font-weight:600;">คน</span></div></div></section>
+  <section class="kpi-grid" id="staffKpiGrid"><div class="kpi-card accent"><div class="kpi-label">Net Amount (Staff)</div><div class="kpi-value">1.24M</div><div class="kpi-value-full">1,238,414</div><div class="kpi-sub">Target 2,664,306&nbsp;·&nbsp;<span class="status-chip critical"><span class="status-dot"></span>ต่ำกว่าเป้า 46.5%</span></div><div class="meter"><div class="meter-fill" style="width:46.481674494297856%;background:var(--status-critical);"></div></div></div><div class="kpi-card"><div class="kpi-label">QTY (Unit)</div><div class="kpi-value">1,836 <span style="font-size:11px;color:var(--text-muted);font-weight:600;">Units</span></div><div class="kpi-sub">Target 3,471&nbsp;·&nbsp;<span class="status-chip critical"><span class="status-dot"></span>52.9%</span></div><div class="meter"><div class="meter-fill" style="width:52.89542375932802%;background:var(--status-critical);"></div></div></div><div class="kpi-card"><div class="kpi-label">จำนวนพนักงาน</div><div class="kpi-value">1,055 <span style="font-size:11px;color:var(--text-muted);font-weight:600;">คน</span></div></div></section>
 
   <section class="grid-1-2">
     <div class="panel">
@@ -1188,7 +1190,7 @@ function renderKPI(kpi){
       '<div class="kpi-divider"></div>'+
       '<div class="kpi-metric-block">'+
         '<div class="kpi-label">QTY (Unit)</div>'+
-        '<div class="kpi-value">'+fmtInt(kpi.qty)+' <span style="font-size:13px;color:var(--text-muted);font-weight:600;">Units</span></div>'+
+        '<div class="kpi-value">'+fmtInt(kpi.qty)+' <span style="font-size:11px;color:var(--text-muted);font-weight:600;">Units</span></div>'+
         '<div class="kpi-sub">Target '+fmtInt(kpi.target_qty)+'&nbsp;·&nbsp;'+
           '<span class="status-chip '+statusQty+'"><span class="status-dot"></span>Ach '+fmtPct(kpi.pct_ach_qty)+'</span>'+
         '</div>'+
@@ -1210,7 +1212,7 @@ function renderKPI(kpi){
       '<div class="kpi-divider"></div>'+
       '<div class="kpi-metric-block">'+
         '<div class="kpi-label">Run-Rate (QTY)</div>'+
-        '<div class="kpi-value">'+fmtInt(kpi.rr_qty)+' <span style="font-size:13px;color:var(--text-muted);font-weight:600;">Units</span></div>'+
+        '<div class="kpi-value">'+fmtInt(kpi.rr_qty)+' <span style="font-size:11px;color:var(--text-muted);font-weight:600;">Units</span></div>'+
         '<div class="kpi-sub"><span class="status-chip '+rrStatusQty+'"><span class="status-dot"></span>RR '+fmtPct(kpi.pct_rr_ach_qty)+'</span></div>'+
         '<div class="meter"><div class="meter-fill" style="width:'+Math.min(100,(kpi.pct_rr_ach_qty||0)*100)+'%;background:'+statusColorVar(rrStatusQty)+';"></div></div>'+
       '</div>'+
@@ -1222,13 +1224,13 @@ function renderKPI(kpi){
     '<div class="kpi-card kpi-card-merged">'+
       '<div class="kpi-metric-block">'+
         '<div class="kpi-label">MOM (RR vs Jul) — Net Amount</div>'+
-        '<div class="kpi-value kpi-delta '+(momUp?'up':'down')+'" style="font-size:22px;">'+(momUp?'▲':'▼')+' '+fmtPctSigned(kpi.pct_mom)+'</div>'+
+        '<div class="kpi-value kpi-delta '+(momUp?'up':'down')+'" style="font-size:17px;">'+(momUp?'▲':'▼')+' '+fmtPctSigned(kpi.pct_mom)+'</div>'+
         '<div class="kpi-sub">RR '+fmtInt(kpi.rr_net)+' vs Jul '+fmtInt(kpi.jul)+'</div>'+
       '</div>'+
       '<div class="kpi-divider"></div>'+
       '<div class="kpi-metric-block">'+
         '<div class="kpi-label">MOM (RR vs Jul) — QTY</div>'+
-        '<div class="kpi-value kpi-delta '+(momUpQty?'up':'down')+'" style="font-size:22px;">'+(momUpQty?'▲':'▼')+' '+fmtPctSigned(kpi.pct_mom_qty)+'</div>'+
+        '<div class="kpi-value kpi-delta '+(momUpQty?'up':'down')+'" style="font-size:17px;">'+(momUpQty?'▲':'▼')+' '+fmtPctSigned(kpi.pct_mom_qty)+'</div>'+
         '<div class="kpi-sub">RR '+fmtInt(kpi.rr_qty)+' vs Jul '+fmtInt(kpi.jul_qty)+'</div>'+
       '</div>'+
     '</div>'
@@ -1741,7 +1743,7 @@ function renderStaffKPI(kpi){
   cards.push(
     '<div class="kpi-card">'+
       '<div class="kpi-label">QTY (Unit)</div>'+
-      '<div class="kpi-value">'+fmtInt(kpi.ach_qty)+' <span style="font-size:13px;color:var(--text-muted);font-weight:600;">Units</span></div>'+
+      '<div class="kpi-value">'+fmtInt(kpi.ach_qty)+' <span style="font-size:11px;color:var(--text-muted);font-weight:600;">Units</span></div>'+
       '<div class="kpi-sub">Target '+fmtInt(kpi.target_qty)+'&nbsp;·&nbsp;'+
         '<span class="status-chip '+qtyStatus+'"><span class="status-dot"></span>'+fmtPct(kpi.pct_ach_qty)+'</span>'+
       '</div>'+
@@ -1752,7 +1754,7 @@ function renderStaffKPI(kpi){
   cards.push(
     '<div class="kpi-card">'+
       '<div class="kpi-label">จำนวนพนักงาน</div>'+
-      '<div class="kpi-value">'+fmtInt(kpi.count)+' <span style="font-size:13px;color:var(--text-muted);font-weight:600;">คน</span></div>'+
+      '<div class="kpi-value">'+fmtInt(kpi.count)+' <span style="font-size:11px;color:var(--text-muted);font-weight:600;">คน</span></div>'+
     '</div>'
   );
 
@@ -2219,7 +2221,22 @@ function downloadUpdatedFile(){
 }
 
 // ---------------- init ----------------
+// keeps the sticky filter-bar pinned directly under the sticky header block,
+// even as the header's height changes (e.g. toggling the upload/save panel)
+function updateStickyOffset(){
+  var head = document.getElementById('stickyHead');
+  if(!head) return;
+  document.documentElement.style.setProperty('--sticky-offset', head.offsetHeight + 'px');
+}
+
 function init(){
+  updateStickyOffset();
+  window.addEventListener('resize', updateStickyOffset);
+  if(typeof ResizeObserver !== 'undefined'){
+    var stickyHeadEl = document.getElementById('stickyHead');
+    if(stickyHeadEl) new ResizeObserver(updateStickyOffset).observe(stickyHeadEl);
+  }
+
   populateRegionalMS();
   populateAreaMS();
   populateShopMS();
