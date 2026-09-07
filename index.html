@@ -2283,7 +2283,7 @@ function downloadUpdatedFile(){
   try {
     var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
     html = html.replace('class="modal-overlay open" id="uploadModalOverlay"', 'class="modal-overlay" id="uploadModalOverlay"');
-    html = html.replace(/const GENERATED_AT = '[^']*';/, "const GENERATED_AT = '2026-09-01T02:44:09.053Z';");
+    html = html.replace(/const GENERATED_AT = '[^']*';/, "const GENERATED_AT = '" + LAST_UPDATED_AT + "';");
     html = html.replace(/const DEFAULT_DATA = \{[\s\S]*?\};\n(\s*)const DEFAULT_STAFF_DATA/, function(m, sp){
       return 'const DEFAULT_DATA = ' + JSON.stringify(DATA) + ';\n' + sp + 'const DEFAULT_STAFF_DATA';
     });
